@@ -1,0 +1,13 @@
+###############################################################################
+# << FILE MANAGED BY PUPPET >>
+# Manual changes are likey to be overwritten
+###############################################################################
+#
+# /etc/pam.d/common-session - session-related modules common to all services
+#
+
+session	[default=1]	pam_permit.so
+session	requisite	pam_deny.so
+session	required	pam_permit.so
+session	required	pam_unix.so 
+session	optional	pam_ldap.so 
