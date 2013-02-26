@@ -1,6 +1,8 @@
 
 class pam::config::redhat {
 
+	include pam::params
+	
 	File {
 		ensure  => present,
 		owner   => $pam::params::owner,

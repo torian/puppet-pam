@@ -8,11 +8,21 @@ class pam::config {
 	#	$databases = $pam::params::databases_none
 	#}
 
-	case $operatingsystem {
+	include pam::params
+
+	case $::operatingsystem {
 	
-		debian:  { include pam::config::debian }
-		redhat:  { include pam::config::redhat }
-		default: { include pam::config::redhat }
+		debian:  {
+			include pam::config::debian 
+		}
+
+		redhat:  {
+			include pam::config::redhat
+		}
+
+		default: { 
+			fail("Operating system ${::operatingsystem} not supported")
+		}
 	}
 
 }

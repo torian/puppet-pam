@@ -1,6 +1,8 @@
 
 class pam::config::debian {
-
+	
+	include pam::params
+	
 	#augeas { "${pam::params::prefix}/":
 	#	context => "/files/${pam::params::prefix} ... ",
 	#	changes => $databases,
@@ -8,8 +10,8 @@ class pam::config::debian {
 
 	File {
 		ensure  => present,
-		owner   => root,
-		group   => root,
+		owner   => 'root',
+		group   => 'root',
 		mode    => 0644,
 		require => Package[$pam::params::package],
 	}
@@ -20,23 +22,23 @@ class pam::config::debian {
 	}
 
 	file { '/etc/pam.d/common-account':
-		source  => "puppet:///${pam::params::mod_prefix}/etc/pam.d/common-account",
+		source  => "puppet:///modules/pam/pam.d/common-account",
 	}
 
 	file { '/etc/pam.d/common-auth':
-		source  => "puppet:///${pam::params::mod_prefix}/etc/pam.d/common-auth",
+		source  => "puppet:///modules/pam/pam.d/common-auth",
 	}
 
 	file { '/etc/pam.d/common-password':
-		source  => "puppet:///${pam::params::mod_prefix}/etc/pam.d/common-password",
+		source  => "puppet:///modules/pam/pam.d/common-password",
 	}
 
 	file { '/etc/pam.d/common-session':
-		source  => "puppet:///${pam::params::mod_prefix}/etc/pam.d/common-session",
+		source  => "puppet:///modules/pam/pam.d/common-session",
 	}
 
 	file { '/etc/pam.d/common-session-noninteractive':
-		source  => "puppet:///${pam::params::mod_prefix}/etc/pam.d/common-session-noninteractive",
+		source  => "puppet:///modules/pam/pam.d/common-session-noninteractive",
 	}
 
 }

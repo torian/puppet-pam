@@ -1,7 +1,7 @@
 
 class pam::params {
 
-	case $operatingsystem {
+	case $::operatingsystem {
 	
 		debian: {
 			
