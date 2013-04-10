@@ -5,7 +5,7 @@
 #
 # /etc/pam.d/common-session - session-related modules common to all services
 #
-
+session required    pam_mkhomedir.so umask=0022 skel=/etc/skel
 session	[default=1]	pam_permit.so
 session	requisite	pam_deny.so
 session	required	pam_permit.so
