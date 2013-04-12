@@ -16,7 +16,10 @@
 # pam-auth-update to manage selection of other modules.  See
 # pam-auth-update(8) for details.
 
-session required    pam_mkhomedir.so umask=0022 skel=/etc/skel
+<% if pam_mkhomedir != false then -%>
+session	required	pam_mkhomedir.so <%= pam_mkhomedir %>
+<% end -%>
+
 # here are the per-package modules (the "Primary" block)
 session	[default=1]			pam_permit.so
 # here's the fallback if no module succeeds
