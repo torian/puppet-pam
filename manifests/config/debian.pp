@@ -1,45 +1,37 @@
 
 class pam::config::debian {
-	
-	include pam::params
-	
-	#augeas { "${pam::params::prefix}/":
-	#	context => "/files/${pam::params::prefix} ... ",
-	#	changes => $databases,
-	#}
+  include pam::params
 
-	File {
-		ensure  => present,
-		owner   => 'root',
-		group   => 'root',
-		mode    => 0644,
-		require => Package[$pam::params::package],
-	}
+  File {
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => 0644,
+    require => Package[$pam::params::package],
+  }
 
-	file { '/etc/pam_ldap.conf':
-		ensure  => link,
-		target  => '/etc/ldap/ldap.conf',
-	}
+  $b_url = 'pam/debian/etc/pam.d'
 
-	file { '/etc/pam.d/common-account':
-		source  => "puppet:///modules/pam/pam.d/common-account",
-	}
+  file {
+    '/etc/pam_ldap.conf':
+      ensure => link,
+      target => '/etc/ldap/ldap.conf';
 
-	file { '/etc/pam.d/common-auth':
-		source  => "puppet:///modules/pam/pam.d/common-auth",
-	}
+    '/etc/pam.d/common-account':
+      content => template("${b_url}/common-account.erb");
 
-	file { '/etc/pam.d/common-password':
-		source  => "puppet:///modules/pam/pam.d/common-password",
-	}
+    '/etc/pam.d/common-auth':
+      content => template("${b_url}/common-auth.erb");
 
-	file { '/etc/pam.d/common-session':
-		source  => "puppet:///modules/pam/pam.d/common-session",
-	}
+    '/etc/pam.d/common-password':
+      content => template("${b_url}/common-password.erb");
 
-	file { '/etc/pam.d/common-session-noninteractive':
-		source  => "puppet:///modules/pam/pam.d/common-session-noninteractive",
-	}
+    '/etc/pam.d/common-session':
+      content => template("${b_url}/common-session.erb");
+
+    '/etc/pam.d/common-session-noninteractive':
+      content => template("${b_url}/common-session-noninteractive.erb");
+  }
 
 }
 
