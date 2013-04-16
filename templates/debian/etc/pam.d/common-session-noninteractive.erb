@@ -16,8 +16,8 @@
 # pam-auth-update to manage selection of other modules.  See
 # pam-auth-update(8) for details.
 
-<% if pam_mkhomedir != false -%>
-session required    pam_mkhomedir.so <%= pam_mkhomedir %>
+<% if scope.lookupvar('pam::params::pam_mkhomedir') != false -%>
+session required    pam_mkhomedir.so <%= scope.lookupvar('pam::params::pam_mkhomedir') %>
 <% end -%>
 # here are the per-package modules (the "Primary" block)
 session	[default=1]			pam_permit.so
