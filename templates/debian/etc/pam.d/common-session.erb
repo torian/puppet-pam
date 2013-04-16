@@ -5,7 +5,9 @@
 #
 # /etc/pam.d/common-session - session-related modules common to all services
 #
-session required    pam_mkhomedir.so umask=0022 skel=/etc/skel
+<% if scope.lookupvar('pam::params::pam_mkhomedir') != false -%>
+session required    pam_mkhomedir.so <%= scope.lookupvar('pam::params::pam_mkhomedir') %>
+<% end -%>
 session	[default=1]	pam_permit.so
 session	requisite	pam_deny.so
 session	required	pam_permit.so
