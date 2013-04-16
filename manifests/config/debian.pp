@@ -18,19 +18,19 @@ class pam::config::debian {
       target => '/etc/ldap/ldap.conf';
 
     '/etc/pam.d/common-account':
-      source => template("${b_url}/common-account.erb");
+      content => template("${b_url}/common-account.erb");
 
     '/etc/pam.d/common-auth':
-      source => template("${b_url}/common-auth.erb");
+      content => template("${b_url}/common-auth.erb");
 
     '/etc/pam.d/common-password':
-      source => template("${b_url}/common-password.erb");
+      content => template("${b_url}/common-password.erb");
 
     '/etc/pam.d/common-session':
-      source => template("${b_url}/common-session.erb");
+      content => template("${b_url}/common-session.erb");
 
     '/etc/pam.d/common-session-noninteractive':
-      source => template("${b_url}/common-session-noninteractive.erb");
+      content => template("${b_url}/common-session-noninteractive.erb");
   }
 
 }

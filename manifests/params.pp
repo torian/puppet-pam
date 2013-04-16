@@ -1,6 +1,6 @@
 
 class pam::params {
-  $pam_mkhomedir = false
+  $pam_mkhomedir = $pam::pam_mkhomedir
 
   case $::operatingsystem {
     debian  : {
