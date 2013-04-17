@@ -17,27 +17,27 @@ class pam::config::debian {
 	}
 	
 	file { '/etc/pam.d/common-account':
-		source  => "puppet:///modules/pam/debian/etc/pam.d/common-account",
+		content => template("pam/pam.d/debian/common-account.erb"),
 		require => File['/etc/pam_ldap.conf'],
 	}
 	
 	file { '/etc/pam.d/common-auth':
-		source => "puppet:///modules/pam/debian/etc/pam.d/common-auth",
+		content => template("pam/pam.d/debian/common-auth.erb"),
 		require => File['/etc/pam_ldap.conf'],
 	}
 	
 	file { '/etc/pam.d/common-password':
-		source => "puppet:///modules/pam/debian/etc/pam.d/common-password",
+		content => template("pam/pam.d/debian/common-password.erb"),
 		require => File['/etc/pam_ldap.conf'],
 	}
 	
 	file { '/etc/pam.d/common-session-noninteractive':
-		source => "puppet:///modules/pam/debian/etc/pam.d/common-session-noninteractive",
+		content => template("pam/pam.d/debian/common-session-noninteractive.erb"),
 		require => File['/etc/pam_ldap.conf'],
 	}
 	
 	file { '/etc/pam.d/common-session':
-		content => template("pam.d/debian/common-session.erb"),
+		content => template("pam/pam.d/debian/common-session.erb"),
 		require => File['/etc/pam_ldap.conf'],
 	}
 	

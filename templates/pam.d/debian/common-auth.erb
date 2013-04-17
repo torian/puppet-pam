@@ -7,6 +7,8 @@
 #
 
 auth	[success=2 default=ignore]	pam_unix.so nullok_secure
+<% if scope.lookupvar('pam::module_type') == 'ldap' then -%>
 auth	[success=1 default=ignore]	pam_ldap.so use_first_pass
+<% end -%>
 auth	requisite			pam_deny.so
 auth	required			pam_permit.so
