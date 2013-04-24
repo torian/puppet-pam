@@ -1,7 +1,7 @@
 
 require 'spec_helper'
  
-describe 'pam' do
+describe 'pam::pamd' do
 
   oses = {
 
@@ -27,14 +27,15 @@ describe 'pam' do
   
   oses.keys.each do |os|
   
-    let(:facts) { { 
-      :operatingsystem        => oses[os][:operatingsystem],
-      :operatingsystemrelease => oses[os][:operatingsystemrelease],
-    } }
-  
     describe "Running on #{os} Release #{oses[os][:operatingsystemrelease]}" do
+
+      let(:facts) { { 
+        :operatingsystem        => oses[os][:operatingsystem],
+        :operatingsystemrelease => oses[os][:operatingsystemrelease],
+      } }
+  
       it { should include_class('pam::params')  }
-      it { should contain_file(oses[os][:prefix_pamd]) }
+      it { should include_class("pam::pamd::#{os.downcase}") }
     end
 
   end

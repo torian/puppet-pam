@@ -1,16 +1,66 @@
-
-# Tested against:
-#   - Debian ?
-#   - RHEL   5.2   / 5.4   / 5.5   / 6.1   / 6.2 /
-#   - OVS    2.1.1 / 2.1.5 / 2.2.0 / 3.0.2 /
-
+# == Class: pam
+#
+# Puppet module to manage pam configuration
+#
+#
+# === Parameters
+#
+#  []
+#    **Required**
+# 
+#  [enable_motd]
+#    Use motd to report the usage of this module.
+#    *Requires*: https://github.com/torian/puppet-motd.git
+#    *Optional* (defaults to false)
+#    
+#  [ensure]
+#    *Optional* (defaults to 'present')
+#
+#
+# == Tested/Works on:
+#   - Debian: 5.0   / 6.0   /
+#
+#
+# === Examples
+#
+# class { 'pam':
+#	
+#	
+# }
+#
+# class { 'pam::pamd':
+#	
+#	
+#	
+#	
+# }
+#
+#
+# === Authors
+#
+# Emiliano Castagnari ecastag@gmail.com (a.k.a. Torian)
+#
+#
+# === Copyleft
+#
+# Copyleft (C) 2012 Emiliano Castagnari ecastag@gmail.com (a.k.a. Torian)
+#
+#
 class pam(
-	$module_type   = 'none',
-	$pam_mkhomedir = false,
-	$ensure        = present) {
+  $enable_motd = false,
+  $ensure      = present) {
+  
+  include pam::params
+  
+  package { $pam::params::packages:
+    ensure => $ensure
+  }
 
-	include pam::params
-	include pam::package
-	include pam::config
-	
+  file { $pam::params::prefix_pamd:
+    ensure => present,
+    owner  => $pam::params::owner,
+    group  => $pam::params::group,
+    mode   => 0755,
+  }
+
 }
