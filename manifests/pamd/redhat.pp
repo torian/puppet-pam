@@ -10,14 +10,14 @@ class pam::pamd::redhat {
     ensure => present
   }
 
-  file { "${pam::params::prefix_pamd}/system-auth-ac":
-    content => template('pam/pam.d/system-auth-ac.erb')
+  file { "${pam::params::prefix_pamd}/system-auth":
+    content => template('pam/pam.d/system-auth.erb')
   }
 
-  file { "${pam::params::prefix_pamd}/system-auth":
+  file { "${pam::params::prefix_pamd}/system-auth-ac":
     ensure  => symlink,
-    target  => "${pam::params::prefix_pamd}/system-auth",
-    require => File["${pam::params::prefix_pamd}/system-auth-ac"],
+    target  => "${pam::params::prefix_pamd}/system-auth-ac",
+    require => File["${pam::params::prefix_pamd}/system-auth"],
   }
 
   if($pam::pamd::pam_ldap) {
