@@ -7,8 +7,9 @@
 #
 
 account	[success=2 new_authtok_reqd=done default=ignore]	pam_unix.so 
-<% if scope.lookupvar('pam::module_type') == 'ldap' then -%>
-account	[success=1 default=ignore]	pam_ldap.so 
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+#account	[success=1 default=ignore]	pam_ldap.so 
+account	<%= scope.lookupvar('pam::pamd::pam_ldap_account_set') %>
 <% end -%>
 account	requisite			pam_deny.so
 account	required			pam_permit.so

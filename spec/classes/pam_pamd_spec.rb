@@ -35,7 +35,40 @@ describe 'pam::pamd' do
       } }
   
       it { should include_class('pam::params')  }
-      it { should include_class("pam::pamd::#{os.downcase}") }
+
+      context "pam_ldap enabled" do
+        let(:params) { { 
+          :pam_ldap  => true,
+          :ldap_uri  => 'ldap://ldapserver',
+          :ldap_base => 'dc=example,dc=com',
+        } } 
+        it { should include_class("pam::pamd::#{os.downcase}") }
+      end
+
+      context "pam_ldap enabled WITHOUT ldap_uri" do
+        let(:params) { { 
+          :pam_ldap  => true,
+          :ldap_base => 'dc=example,dc=com',
+        } } 
+        it do 
+          expect {
+            should include_class("pam::pamd::#{os.downcase}")
+          }.to raise_error(Puppet::Error, /^If pam_ldap is true, yout must provide ldap_uri/)
+        end
+      end
+
+      context "pam_ldap enabled WITHOUT ldap_base" do
+        let(:params) { { 
+          :pam_ldap  => true,
+          :ldap_uri  => 'ldap://ldapserver',
+        } } 
+        it do 
+          expect {
+            should include_class("pam::pamd::#{os.downcase}")
+          }.to raise_error(Puppet::Error, /^If pam_ldap is true, yout must provide ldap_base/)
+        end
+      end
+
     end
 
   end
