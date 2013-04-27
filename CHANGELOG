@@ -11,6 +11,9 @@
    - pam_tally2
    - pam_cracklib
    - pam_mkhomedir
+ * If pam_ldap => true in pam::pamd() create a symlink
+   to /etc/{ldap,openldap}/ldap.conf (debian / redhat).
+   This requires the use of ldap module.
 
 2013-04-17 - Version 0.0.3
  * moved pam.d files to templates
