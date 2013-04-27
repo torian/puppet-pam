@@ -6,31 +6,22 @@
 auth        required      pam_env.so
 auth        sufficient    pam_unix.so nullok try_first_pass
 auth        requisite     pam_succeed_if.so uid >= 500 quiet
-<% if pam_sss then -%>
-auth        <%= scope.lookup('pam::pamd::pam_sss_auth_set') %>
-<% end -%>
-<% if module_type == 'ldap' then -%>
-auth        sufficient    pam_ldap.so use_first_pass
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+auth  <%= scope.lookupvar('pam::pamd::pam_ldap_auth_set') %>
 <% end -%>
 auth        required      pam_deny.so
 
 account     required      pam_unix.so broken_shadow
 account     sufficient    pam_succeed_if.so uid < 500 quiet
-<% if pam_sss then -%>
-auth        <%= scope.lookup('pam::pamd::pam_sss_account_set') %>
-<% end -%>
-<% if module_type == 'ldap' then -%>
-account     [default=bad success=ok user_unknown=ignore] pam_ldap.so
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+account	<%= scope.lookupvar('pam::pamd::pam_ldap_account_set') %>
 <% end -%>
 account     required      pam_permit.so
 
 password    requisite     pam_cracklib.so try_first_pass retry=3 type=
 password    sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok
-<% if pam_sss then -%>
-auth        <%= scope.lookup('pam::pamd::pam_sss_password_set') %>
-<% end -%>
-<% if module_type == 'ldap' then -%>
-password    sufficient    pam_ldap.so use_authtok
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+password  <%= scope.lookupvar('pam::pamd::pam_ldap_password_set') %>
 <% end -%>
 password    required      pam_deny.so
 
@@ -38,10 +29,7 @@ session     optional      pam_keyinit.so revoke
 session     required      pam_limits.so
 session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
 session     required      pam_unix.so
-<% if pam_sss then -%>
-auth        <%= scope.lookup('pam::pamd::pam_sss_session_set') %>
-<% end -%>
-<% if module_type == 'ldap' then -%>
-session     optional      pam_ldap.so
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+session	<%= scope.lookupvar('pam::pamd::pam_ldap_session_set') %>
 <% end -%>
 

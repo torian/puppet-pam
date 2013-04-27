@@ -2,9 +2,6 @@
 # << FILE MANAGED BY PUPPET >>
 # Manual changes are likey to be overwritten
 ###############################################################################
-#
-# /etc/pam.d/common-account - authorization settings common to all services
-#
 
 account	[success=2 new_authtok_reqd=done default=ignore]	pam_unix.so 
 <% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>

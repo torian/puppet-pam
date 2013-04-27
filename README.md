@@ -46,6 +46,7 @@ Notes
 
 Tested on
  * Debian: 5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
+ * Redhat: 5.x 
 
 Requirements
 ------------
