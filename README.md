@@ -9,15 +9,15 @@ Puppet module to manage **PAM** configuration.
 Usage
 -----
 
-# Class pam::pamd
+### Class pam::pamd
 
-## No module configuration
+#### No module configuration
 
 ```
   class { 'pam::pamd': }
 ```
 
-## Ldap module
+#### Ldap module
 
 If you want pam_ldap:
 
