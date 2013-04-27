@@ -31,9 +31,9 @@ class pam::pamd (
 
   include pam::params
 
-	if($enable_motd) {
-		motd::register { 'pam::pamd': }
-	}
+  if($enable_motd) {
+    motd::register { 'pam::pamd': }
+  }
 
   if($pam_ldap) {
     
