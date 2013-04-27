@@ -24,8 +24,6 @@ If you want pam_ldap:
 ```
   class { 'pam::pamd':
     pam_ldap  => true,
-    ldap_uri  => 'ldap:://ldap.example.com',
-    ldap_base => 'dc=example,dc=base', 
   }
 ```
 Or even if you need a specific behavoir on auth:
@@ -34,8 +32,6 @@ Or even if you need a specific behavoir on auth:
   class { 'pam::pamd':
     pam_ldap      => true,
     pam_ldap_auth => '[success=1 default=ignore] pam_ldap.so use_first_pass'
-    ldap_uri      => 'ldap:://ldap.example.com',
-    ldap_base     => 'dc=example,dc=base', 
   }
 ```
 
@@ -51,7 +47,10 @@ Tested on
 Requirements
 ------------
 
-  None
+ * If pam_ldap is enabled (pam_ldap => true) you'll need
+   [puppet-ldap](https://github.com/torian/puppet-ldap.git)
+ * If enable_motd is enabled (enable_motd => true) you'll need
+   [puppet-motd](https://github.com/torian/puppet-motd.git)
 
 TODO
 ----
