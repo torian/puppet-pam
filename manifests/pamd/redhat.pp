@@ -21,10 +21,8 @@ class pam::pamd::redhat {
   }
 
   if($pam::pamd::pam_ldap) {
-    file { '/etc/ldap.conf'
-      ensure  => symlink,
-      target  => "${pam::params::prefix_pamd}/system-auth",
-      require => File["${pam::params::prefix_pamd}/system-auth-ac"],
+    file { '/etc/ldap.conf':
+      content => template('pam/pam_ldap.conf.erb')
     }
   }
 }
