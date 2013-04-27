@@ -13,26 +13,31 @@ Usage
 
 ## No module configuration
 
+```
   class { 'pam::pamd': }
+```
 
 ## Ldap module
 
 If you want pam_ldap:
 
+```
   class { 'pam::pamd':
     pam_ldap  => true,
     ldap_uri  => 'ldap:://ldap.example.com',
     ldap_base => 'dc=example,dc=base', 
   }
-
+```
 Or even if you need a specific behavoir on auth:
 
+```
   class { 'pam::pamd':
     pam_ldap      => true,
     pam_ldap_auth => '[success=1 default=ignore] pam_ldap.so use_first_pass'
     ldap_uri      => 'ldap:://ldap.example.com',
     ldap_base     => 'dc=example,dc=base', 
   }
+```
 
 Note: otherwise, pam_ldap_auth defaults to 'sufficient pam_ldap.so use_first_pass'
 
