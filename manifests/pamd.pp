@@ -6,13 +6,6 @@ class pam::pamd (
   $pam_ldap_password     = false,
   $pam_ldap_session      = false,
 
-  $ldap_uri              = false,
-  $ldap_base             = false,
-  $ldap_att_login        = 'uid',
-  $ldap_att_member       = 'member',
-  $ldap_passwd           = 'md5',
-  $ldap_filter           = 'objectClass=posixAccount',
-
   $pam_ldapd             = false,
   $pam_ldapd_account     = false,
   $pam_ldapd_auth        = false,
@@ -44,13 +37,7 @@ class pam::pamd (
 
   if($pam_ldap) {
     
-    if(!$ldap_uri) {
-      fail('If pam_ldap is true, yout must provide ldap_uri')
-    }
-
-    if(!$ldap_base) {
-      fail('If pam_ldap is true, yout must provide ldap_base')
-    }
+    #Class['ldap'] -> Class['pam::pamd']
 
     case $pam_ldap_account {
       false:   { $pam_ldap_account_set = $pam::params::pam_ldap_account }

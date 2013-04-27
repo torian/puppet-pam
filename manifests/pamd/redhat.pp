@@ -22,7 +22,9 @@ class pam::pamd::redhat {
 
   if($pam::pamd::pam_ldap) {
     file { '/etc/ldap.conf':
-      content => template('pam/pam_ldap.conf.erb')
+      ensure  => symlink,
+      target  => $pam::params::ldap_conf,
+      require => [ Class['ldap'], File[$pam::params::ldap_conf] ],
     }
   }
 }
