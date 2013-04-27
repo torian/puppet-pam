@@ -56,7 +56,6 @@ TODO
 ----
 
  * Testing was done only on pam_ldap parameters
- * Test on rhel
 
 CopyLeft
 ---------
