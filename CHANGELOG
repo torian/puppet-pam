@@ -3,6 +3,7 @@
  * bugfix: ensure => symlink to ensure => link.
  * bugfix: Redhat: real file system-auth-ac.
  * added support for OVS
+ * added support for OpenSuSE 12.x SLES 11.x
 
 2013-04-27 - Version 0.0.4
  * Complete rewrite / interface changes
