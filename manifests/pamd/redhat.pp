@@ -15,9 +15,7 @@ class pam::pamd::redhat {
   }
 
   file { "${pam::params::prefix_pamd}/system-auth":
-    ensure  => link,
-    target  => "${pam::params::prefix_pamd}/system-auth-ac",
-    require => File["${pam::params::prefix_pamd}/system-auth-ac"],
+    content => template('pam/pam.d/system-auth-ac.erb')
   }
 
   if($pam::pamd::pam_ldap) {
