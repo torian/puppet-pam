@@ -26,8 +26,7 @@ class pam::pamd (
   $pam_mkhomedir         = false,
   $pam_mkhomedir_session = false,
 
-  $enable_motd           = false,
-  ) {
+  $enable_motd           = false) {
 
   include pam::params
 
