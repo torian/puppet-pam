@@ -38,6 +38,12 @@ class pam::pamd (
     
     #Class['ldap'] -> Class['pam::pamd']
 
+    if($pam::params::package_pam_ldap) {
+      package { $pam::params::package_pam_ldap:
+        ensure => installed,
+      }
+    }
+    
     case $pam_ldap_account {
       false:   { $pam_ldap_account_set = $pam::params::pam_ldap_account }
       default: { $pam_ldap_account_set = $pam_ldap_account }
@@ -136,6 +142,7 @@ class pam::pamd (
       include pam::pamd::debian
     }
     
+   
     'Redhat': { 
       include pam::pamd::redhat
     }
@@ -143,10 +150,10 @@ class pam::pamd (
     'OVS': { 
       include pam::pamd::redhat
     }
-    
-    #SLES: { 
-    #  include pam::pamd::sles
-    #}
+
+    /(OpenSuSE|SLES)/: { 
+      include pam::pamd::sles
+    }
     
     default: {
       fail("Operating system ${::operatingsystem} not supported")
