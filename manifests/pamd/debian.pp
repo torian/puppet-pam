@@ -35,7 +35,7 @@ class pam::pamd::debian {
     #Class['ldap'] -> Class['pam::pamd::debian']
 
     file { '/etc/pam_ldap.conf':
-      ensure  => symlink,
+      ensure  => link,
       target  => $pam::params::ldap_conf,
       require => [ Class['ldap'], File[$pam::params::ldap_conf] ],
     }
