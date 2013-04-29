@@ -133,11 +133,15 @@ class pam::pamd (
 
   case $::operatingsystem {
     
-    debian: { 
+    'Debian': { 
       include pam::pamd::debian
     }
     
-    redhat: { 
+    'Redhat': { 
+      include pam::pamd::redhat
+    }
+
+    'OVS': { 
       include pam::pamd::redhat
     }
     
