@@ -43,6 +43,7 @@ Notes
 Tested on
  * Debian: 5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
  * Redhat: 5.x 
+ * OpenSuSE 12.x / SLES 11.x
 
 Requirements
 ------------

@@ -4,6 +4,8 @@
  * bugfix: Redhat: real file system-auth-ac.
  * added support for OVS
  * added support for OpenSuSE 12.x SLES 11.x
+ * packages required by pam_ldap => true are now
+   managed by pam::pamd()
 
 2013-04-27 - Version 0.0.4
  * Complete rewrite / interface changes
