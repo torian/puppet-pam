@@ -40,7 +40,7 @@ class pam::pamd (
 
     if($pam::params::package_pam_ldap) {
       package { $pam::params::package_pam_ldap:
-        ensure => installed,
+        ensure => present,
       }
     }
     
