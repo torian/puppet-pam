@@ -1,4 +1,141 @@
-
+# == Class: pam::pamd
+#
+# Puppet module to manage pam configuration
+# This class handles configuration of /etc/pam.d files
+# according to selected modules.
+#
+# === Parameters
+#
+#  [pam_ldap]
+#  If enabled sets up the usage of pam_ldap.so
+#  *Conflicts* pam_ldapd
+#  *Optional* defaults to false
+#
+#  [pam_ldap_account]
+#  When specified, it allows for customization
+#  of pam_ldap.so in account type
+#  *Requires* pam_ldap => true
+#  *Optional* defaults to '[default=bad success=ok user_unknown=ignore] pam_ldap.so'
+#
+#  [pam_ldap_auth]
+#  When specified it allows for customization
+#  of pam_ldap.so in auth type
+#  *Requires* pam_ldap => true
+#  *Optional* defaults to 'sufficient    pam_ldap.so use_first_pass'
+#
+#  [pam_ldap_password]
+#  When specified it allows for customization
+#  of pam_ldap.so in password type
+#  *Requires* pam_ldap => true
+#  *Optional* defaults to 'sufficient    pam_ldap.so use_authtok'
+#
+#  [pam_ldap_session]
+#  When specified it allows for customization
+#  of pam_ldap.so in session type
+#  *Requires* pam_ldap => true
+#  *Optional* defaults to 'optional      pam_ldap.so'
+#
+#  [pam_ldapd]
+#  If enabled sets up the usage of pam_ldapd.so
+#  UNTESTED
+#  *Conflicts* pam_ldap
+#  *Optional* defaults to false
+#
+#  [pam_ldapd_account]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_ldapd_auth]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_ldapd_password]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_ldapd_session]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_tally]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_tally_account]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_tally_auth]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_tally2]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_tally2_account]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_tally2_auth]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_cracklib]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_cracklib_password]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_mkhomedir]
+#  UNTESTED
+#  *Optional* defaults to false
+#
+#  [pam_mkhomedir_session]
+#  UNTESTED
+#  *Optional* defaults to false
+# 
+#  [enable_motd]
+#    Use motd to report the usage of this module.
+#    *Requires*: https://github.com/torian/puppet-motd.git
+#    *Optional* (defaults to false)
+#    
+#  [ensure]
+#    *Optional* (defaults to 'present')
+#
+#
+# == Tested/Works on:
+#   - Debian:   5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
+#   - Redhat:   5.x
+#   - OVS:      
+#   - OpenSuSE: 12.x
+#   - SLES:     11.x
+#
+# === Examples
+#
+# class { 'pam::pamd':
+#	  pam_ldap => true,
+# }
+#
+# class { 'pam::pamd':
+#	  pam_ldap          => true,
+#   pam_ldap_account  => '[success=1 default=ignore] pam_ldap.so',
+#   pam_ldap_password => '[success=1 user_unknown=ignore default=die] pam_ldap.so use_authtok try_first_pass'
+# }
+#
+#
+# === Authors
+#
+# Emiliano Castagnari ecastag@gmail.com (a.k.a. Torian)
+#
+#
+# === Copyleft
+#
+# Copyleft (C) 2012 Emiliano Castagnari ecastag@gmail.com (a.k.a. Torian)
+#
+#
 class pam::pamd (
   $pam_ldap              = false,
   $pam_ldap_account      = false,
