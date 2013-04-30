@@ -1,5 +1,5 @@
 name    'torian-pam'
-version '0.0.5'
+version '0.0.6'
 source 'https://github.com/torian/puppet-pam'
 author 'Emiliano Castagnari ecastag@gmail.com (aka Torian)'
 license 'Apache'

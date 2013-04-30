@@ -1,3 +1,6 @@
+2013-04-30 - Version 0.0.6
+ * Added support for rhel 6.x (password-auth-ac)
+ * fixed typo when evaluating $pam_ldapd ($pam::pam_ldapd) at pam::pamd()
 
 2013-04-29 - Version 0.0.5
  * bugfix: ensure => symlink to ensure => link.

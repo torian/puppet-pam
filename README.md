@@ -41,9 +41,11 @@ Notes
 -----
 
 Tested on
- * Debian: 5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
- * Redhat: 5.x 
+ * Debian:  5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
+ * Redhat:  5.x / 6.x
+ * OVS:     2.x / 3.x
  * OpenSuSE 12.x / SLES 11.x
+
 
 Requirements
 ------------

@@ -203,7 +203,7 @@ class pam::pamd (
     
   }
 
-  if($pam::pam_ldapd) {
+  if($pam_ldapd) {
   
     case $pam_ldapd_account {
       false:   { $pam_ldapd_account_set = $pam::params::pam_ldapd_account }
