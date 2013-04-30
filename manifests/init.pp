@@ -1,7 +1,7 @@
 # == Class: pam
 #
 # Puppet module to manage pam configuration
-#
+# FIXME: not sure if I'll give it any usage to this class
 #
 # === Parameters
 #
@@ -24,13 +24,6 @@
 # === Examples
 #
 # class { 'pam':
-#	
-#	
-# }
-#
-# class { 'pam::pamd':
-#	
-#	
 #	
 #	
 # }
