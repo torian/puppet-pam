@@ -26,7 +26,7 @@ class pam::params {
       $pam_tally_auth        = "required      pam_tally.so deny=3 onerr=fail"
 
       $pam_tally2_account    = "required      pam_tally2.so"
-      $pam_tally2_auth       = "required      pam_tally2.so"
+      $pam_tally2_auth       = "required      pam_tally2.so deny=3 onerr=fail unlock_time=60"
 
       $pam_cracklib_password = "requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1"
 
@@ -57,7 +57,7 @@ class pam::params {
       $pam_tally_auth        = "required      pam_tally.so deny=3 onerr=fail"
 
       $pam_tally2_account    = "required      pam_tally2.so"
-      $pam_tally2_auth       = "required      pam_tally2.so"
+      $pam_tally2_auth       = "required      pam_tally2.so deny=3 onerr=fail unlock_time=60"
 
       $pam_cracklib_password = "requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1"
 
@@ -88,7 +88,7 @@ class pam::params {
       $pam_tally_auth        = "required      pam_tally.so deny=3 onerr=fail"
 
       $pam_tally2_account    = "required      pam_tally2.so"
-      $pam_tally2_auth       = "required      pam_tally2.so"
+      $pam_tally2_auth       = "required      pam_tally2.so deny=3 onerr=fail unlock_time=60"
 
       $pam_cracklib_password = "requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1"
 
@@ -119,7 +119,7 @@ class pam::params {
       $pam_tally_auth        = "required      pam_tally.so deny=3 onerr=fail"
 
       $pam_tally2_account    = "required      pam_tally2.so"
-      $pam_tally2_auth       = "required      pam_tally2.so"
+      $pam_tally2_auth       = "required      pam_tally2.so deny=3 onerr=fail unlock_time=60"
 
       $pam_cracklib_password = "requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1"
 
