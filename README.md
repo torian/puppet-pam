@@ -13,27 +13,21 @@ Usage
 
 #### No module configuration
 
-```
   class { 'pam::pamd': }
-```
 
 #### Ldap module
 
 If you want pam_ldap:
 
-```
   class { 'pam::pamd':
     pam_ldap  => true,
   }
-```
 Or even if you need a specific behavoir on auth:
 
-```
   class { 'pam::pamd':
     pam_ldap      => true,
     pam_ldap_auth => '[success=1 default=ignore] pam_ldap.so use_first_pass'
   }
-```
 
 Note: otherwise, pam_ldap_auth defaults to 'sufficient pam_ldap.so use_first_pass'
 
@@ -41,11 +35,15 @@ Notes
 -----
 
 Tested on
- * Debian:  5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
+ * Debian:  Etch / Squeeze / Wheezy
  * Redhat:  5.x / 6.x
  * OVS:     2.x / 3.x
  * OpenSuSE 12.x / SLES 11.x
 
+Tested PAM Modules:
+  * pam_ldap
+  * pam_tally
+  * pam_tally2
 
 Requirements
 ------------
