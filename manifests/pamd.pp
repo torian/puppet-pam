@@ -276,20 +276,20 @@ class pam::pamd (
 
   case $::operatingsystem {
     
-    'Debian': { 
+    /(?i:Debian)/: { 
       include pam::pamd::debian
     }
     
    
-    /(Redhat|CentOS)/: { 
+    /(?i:Redhat|CentOS)/: { 
       include pam::pamd::redhat
     }
 
-    'OVS': { 
+    /(?i:OVS)/: { 
       include pam::pamd::redhat
     }
 
-    /(OpenSuSE|SLES)/: { 
+    /(?i:OpenSuSE|SLES)/: { 
       include pam::pamd::sles
     }
     

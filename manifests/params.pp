@@ -3,7 +3,7 @@ class pam::params {
 
   case $::operatingsystem {
     
-    /(Debian)/: {
+    /(?i:Debian)/: {
       $packages    = [ 'libpam-ldap' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
@@ -34,7 +34,7 @@ class pam::params {
 
     }
 
-    /(Redhat|CentOS)/: {
+    /(?i:Redhat|CentOS)/: {
       $packages    = [ 'pam' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
@@ -65,7 +65,7 @@ class pam::params {
 
     }
     
-    'OVS': {
+    /(?i:OVS)/: {
       $packages    = [ 'pam' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
@@ -96,7 +96,7 @@ class pam::params {
 
     }
  
-    /(OpenSuSE|SLES)/: {
+    /(?i:OpenSuSE|SLES)/: {
       $packages    = [ 'pam' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
