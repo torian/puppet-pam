@@ -1,3 +1,6 @@
+2013-06-14 - Version 0.0.8
+ * added support for CentOS
+
 2013-05-28 - Version 0.0.7
  * added support for pam_tally / pam_tally2
 

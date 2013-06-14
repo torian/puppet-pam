@@ -108,7 +108,8 @@
 #
 # == Tested/Works on:
 #   - Debian:   5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
-#   - Redhat:   5.x
+#   - Redhat:   5.x        / 6.x
+#   - CentOS:   5.x        / 6.x
 #   - OVS:      
 #   - OpenSuSE: 12.x
 #   - SLES:     11.x
@@ -280,7 +281,7 @@ class pam::pamd (
     }
     
    
-    'Redhat': { 
+    /(Redhat|CentOS)/: { 
       include pam::pamd::redhat
     }
 

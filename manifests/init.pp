@@ -18,7 +18,9 @@
 #
 #
 # == Tested/Works on:
-#   - Debian: 5.0   / 6.0   /
+#   - Debian: 5.0   / 6.0   / 7.0
+#   - Redhat: 5.x   / 6.x   /
+#   - CentOS: 5.x   / 6.x   /
 #
 #
 # === Examples

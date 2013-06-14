@@ -37,6 +37,7 @@ Notes
 Tested on
  * Debian:  Etch / Squeeze / Wheezy
  * Redhat:  5.x / 6.x
+ * CentOS:  5.x / 6.x
  * OVS:     2.x / 3.x
  * OpenSuSE 12.x / SLES 11.x
 

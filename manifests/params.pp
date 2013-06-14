@@ -3,7 +3,7 @@ class pam::params {
 
   case $::operatingsystem {
     
-    'Debian': {
+    /(Debian)/: {
       $packages    = [ 'libpam-ldap' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
@@ -34,7 +34,7 @@ class pam::params {
 
     }
 
-    'Redhat': {
+    /(Redhat|CentOS)/: {
       $packages    = [ 'pam' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
