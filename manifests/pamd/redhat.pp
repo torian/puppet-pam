@@ -1,13 +1,14 @@
-
+# == Class: pam::pamd::redhat
+#
 class pam::pamd::redhat {
 
   include pam::params
 
   File {
+    ensure => present,
     owner  => 'root',
     group  => 'root',
-    mode   => 0644,
-    ensure => present
+    mode   => '0644'
   }
 
   file { "${pam::params::prefix_pamd}/system-auth-ac":
@@ -18,12 +19,10 @@ class pam::pamd::redhat {
     content => template('pam/pam.d/system-auth-ac.erb')
   }
 
-  case $::operatingsystemrelease {
-    /^6\./: {
-      file { "${pam::params::prefix_pamd}/password-auth-ac":
-        ensure  => file,
-        content => template('pam/pam.d/system-auth-ac.erb'),
-      }
+  if($::operatingsystemrelease =~ /^6\./) {
+    file { "${pam::params::prefix_pamd}/password-auth-ac":
+      ensure  => file,
+      content => template('pam/pam.d/system-auth-ac.erb'),
     }
   }
 
