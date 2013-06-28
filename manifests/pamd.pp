@@ -96,12 +96,12 @@
 #  [pam_mkhomedir_session]
 #  UNTESTED
 #  *Optional* defaults to false
-# 
+#
 #  [enable_motd]
 #    Use motd to report the usage of this module.
 #    *Requires*: https://github.com/torian/puppet-motd.git
 #    *Optional* (defaults to false)
-#    
+#
 #  [ensure]
 #    *Optional* (defaults to 'present')
 #
@@ -110,18 +110,18 @@
 #   - Debian:   5.0 (etch) / 6.0 (squeeze) / 7.0 (wheezy)
 #   - Redhat:   5.x        / 6.x
 #   - CentOS:   5.x        / 6.x
-#   - OVS:      
+#   - OVS:
 #   - OpenSuSE: 12.x
 #   - SLES:     11.x
 #
 # === Examples
 #
 # class { 'pam::pamd':
-#	  pam_ldap => true,
+#   pam_ldap => true,
 # }
 #
 # class { 'pam::pamd':
-#	  pam_ldap          => true,
+#   pam_ldap          => true,
 #   pam_ldap_account  => '[success=1 default=ignore] pam_ldap.so',
 #   pam_ldap_password => '[success=1 user_unknown=ignore default=die] pam_ldap.so use_authtok try_first_pass'
 # }
@@ -173,7 +173,7 @@ class pam::pamd (
   }
 
   if($pam_ldap) {
-    
+
     #Class['ldap'] -> Class['pam::pamd']
 
     if($pam::params::package_pam_ldap) {
@@ -181,79 +181,79 @@ class pam::pamd (
         ensure => present,
       }
     }
-    
+
     case $pam_ldap_account {
       false:   { $pam_ldap_account_set = $pam::params::pam_ldap_account }
       default: { $pam_ldap_account_set = $pam_ldap_account }
     }
-    
+
     case $pam_ldap_auth {
       false:   { $pam_ldap_auth_set = $pam::params::pam_ldap_auth }
       default: { $pam_ldap_auth_set = $pam_ldap_auth }
     }
-    
+
     case $pam_ldap_password {
       false:   { $pam_ldap_password_set = $pam::params::pam_ldap_password }
       default: { $pam_ldap_password_set = $pam_ldap_password }
     }
-    
+
     case $pam_ldap_session {
       false:   { $pam_ldap_session_set = $pam::params::pam_ldap_session }
       default: { $pam_ldap_session_set = $pam_ldap_session }
     }
-    
+
   }
 
   if($pam_ldapd) {
-  
+
     case $pam_ldapd_account {
       false:   { $pam_ldapd_account_set = $pam::params::pam_ldapd_account }
       default: { $pam_ldapd_account_set = $pam_ldapd_account }
     }
-    
+
     case $pam_ldapd_auth {
       false:   { $pam_ldapd_auth_set = $pam::params::pam_ldapd_auth }
       default: { $pam_ldapd_auth_set = $pam_ldapd_auth }
     }
-    
+
     case $pam_ldapd_password {
       false:   { $pam_ldapd_password_set = $pam::params::pam_ldapd_password }
       default: { $pam_ldapd_password_set = $pam_ldapd_password }
     }
-    
+
     case $pam_ldapd_session {
       false:   { $pam_ldapd_session_set = $pam::params::pam_ldapd_session }
       default: { $pam_ldapd_session_set = $pam_ldapd_session }
     }
-    
+
   }
 
   if($pam_tally) {
-  
+
     case $pam_tally_account {
       false:   { $pam_tally_account_set = $pam::params::pam_tally_account }
       default: { $pam_tally_account_set = $pam_tally_account }
     }
-    
+
     case $pam_tally_auth {
       false:   { $pam_tally_auth_set = $pam::params::pam_tally_auth }
       default: { $pam_tally_auth_set = $pam_tally_auth }
     }
-    
+
   }
 
   if($pam_tally2) {
-  
+
     case $pam_tally2_account {
       false:   { $pam_tally2_account_set = $pam::params::pam_tally2_account }
       default: { $pam_tally2_account_set = $pam_tally2_account }
     }
-    
+
     case $pam_tally2_auth {
       false:   { $pam_tally2_auth_set = $pam::params::pam_tally2_auth }
       default: { $pam_tally2_auth_set = $pam_tally2_auth }
     }
-    
+
   }
 
   if($pam_cracklib) {
@@ -265,7 +265,7 @@ class pam::pamd (
 
   }
 
-  if($pam_homemkdir) {
+  if($pam_mkhomedir) {
 
     case $pam_mkhomedir_session {
       false:   { $pam_mkhomedir_session_set = $pam::params::pam_mkhomedir_session }
@@ -275,28 +275,28 @@ class pam::pamd (
   }
 
   case $::operatingsystem {
-    
-    /(?i:Debian)/: { 
+
+    /(?i:Debian)/: {
       include pam::pamd::debian
     }
-    
-   
-    /(?i:Redhat|CentOS)/: { 
+
+
+    /(?i:Redhat|CentOS)/: {
       include pam::pamd::redhat
     }
 
-    /(?i:OVS)/: { 
+    /(?i:OVS)/: {
       include pam::pamd::redhat
     }
 
-    /(?i:OpenSuSE|SLES)/: { 
+    /(?i:OpenSuSE|SLES)/: {
       include pam::pamd::sles
     }
-    
+
     default: {
       fail("Operating system ${::operatingsystem} not supported")
     }
-    
+
   }
 
 }
