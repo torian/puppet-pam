@@ -1,5 +1,7 @@
-2013-06-14 - Version 0.0.8
+2013-07-01 - Version 0.0.8
  * added support for CentOS
+ * commit by Jason Corley <jcorley@sugarcrm.com>: Rake lint compatible
+ * Fixed rhel 6.x nss_ldap => nss-pam-ldapd
 
 2013-05-28 - Version 0.0.7
  * added support for pam_tally / pam_tally2
