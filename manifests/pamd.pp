@@ -275,8 +275,7 @@ class pam::pamd (
   }
 
   case $::operatingsystem {
-
-    /(?i:Debian)/: {
+    /(?i:Debian|Ubuntu)/: { 
       include pam::pamd::debian
     }
 
