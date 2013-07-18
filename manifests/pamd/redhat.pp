@@ -19,18 +19,47 @@ class pam::pamd::redhat {
     content => template('pam/pam.d/system-auth-ac.erb')
   }
 
-  if($::operatingsystemrelease =~ /^6\./) {
-    file { "${pam::params::prefix_pamd}/password-auth-ac":
-      ensure  => file,
-      content => template('pam/pam.d/system-auth-ac.erb'),
-    }
-  }
-
   if($pam::pamd::pam_ldap) {
+    
+    #File['/etc/ldap.conf'] -> File[$pam::params::ldap_conf]
+
     file { '/etc/ldap.conf':
       ensure  => link,
       target  => $pam::params::ldap_conf,
-      require => [ Class['ldap'], File[$pam::params::ldap_conf] ],
     }
+
   }
+
+  case $::operatingsystemmajrelease {
+
+    5 : {}
+
+    6 : {
+      
+      file { "${pam::params::prefix_pamd}/password-auth-ac":
+        ensure  => present,
+        content => template('pam/pam.d/system-auth-ac.erb'),
+      }
+      
+      # rhel 6 uses pam_ldap.conf:
+      if($pam::pamd::pam_ldap) {
+      
+        #File['/etc/pam_ldap.conf'] -> File[$pam::params::ldap_conf]
+
+        file { '/etc/pam_ldap.conf':
+          ensure  => link,
+          target  => $pam::params::ldap_conf,
+        }
+
+      }
+      
+    }
+
+    default : {
+      notice("Version $::operatingsystemmajrelease not handled")
+    }
+
+  }
+
 }
+
