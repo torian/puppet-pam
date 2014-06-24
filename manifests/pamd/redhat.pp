@@ -20,7 +20,6 @@ class pam::pamd::redhat {
   }
 
   if($pam::pamd::pam_ldap) {
-    
     #File['/etc/ldap.conf'] -> File[$pam::params::ldap_conf]
 
     file { '/etc/ldap.conf':
@@ -35,15 +34,12 @@ class pam::pamd::redhat {
     5 : {}
 
     6 : {
-      
       file { "${pam::params::prefix_pamd}/password-auth-ac":
         ensure  => present,
         content => template('pam/pam.d/system-auth-ac.erb'),
       }
-      
       # rhel 6 uses pam_ldap.conf:
       if($pam::pamd::pam_ldap) {
-      
         #File['/etc/pam_ldap.conf'] -> File[$pam::params::ldap_conf]
 
         file { '/etc/pam_ldap.conf':
@@ -52,11 +48,10 @@ class pam::pamd::redhat {
         }
 
       }
-      
     }
 
     default : {
-      notice("Version $::operatingsystemmajrelease not handled")
+      notice("Version ${::operatingsystemmajrelease} not handled")
     }
 
   }
