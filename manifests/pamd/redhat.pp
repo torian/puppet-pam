@@ -6,6 +6,7 @@ class pam::pamd::redhat {
 
   File {
     ensure => present,
+    links  => follow,
     owner  => 'root',
     group  => 'root',
     mode   => '0644'
