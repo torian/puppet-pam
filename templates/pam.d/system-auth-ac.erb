@@ -27,6 +27,7 @@ account	    <%= scope.lookupvar('pam::pamd::pam_tally_account_set') %>
 account	    <%= scope.lookupvar('pam::pamd::pam_tally2_account_set') %>
 <% end -%>
 account     <%= scope.lookupvar('pam::pamd::pam_unix_account_set') %>
+account     sufficient    pam_localuser.so
 account     sufficient    pam_succeed_if.so uid < 500 quiet
 <% if scope.lookupvar('pam::pamd::pam_sss') == true then -%>
 account     <%= scope.lookupvar('pam::pamd::pam_sss_account_set') %>
