@@ -81,6 +81,34 @@
 #  UNTESTED
 #  *Optional* defaults to false
 #
+#  [pam_sss]
+#  If enabled sets up the usage of pam_sss.so
+#  *Optional* defaults to false
+#
+#  [pam_sss_account]
+#  When specified it allows for customization
+#  of pam_sss.so in account type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to '[default=bad success=ok user_unknown=ignore] pam_sss.so'
+#
+#  [pam_sss_auth]
+#  When specified it allows for customization
+#  of pam_sss.so in auth type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to 'sufficient    pam_sss.so use_first_pass'
+#
+#  [pam_sss_password]
+#  When specified it allows for customization
+#  of pam_sss.so in password type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to 'sufficient    pam_sss.so use_authtok'
+#
+#  [pam_sss_session]
+#  When specified it allows for customization
+#  of pam_sss.so in session type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to 'optional      pam_sss.so'
+#
 #  [pam_tally]
 #  UNTESTED
 #  *Optional* defaults to false
@@ -179,6 +207,12 @@ class pam::pamd (
   $pam_ldapd_password    = false,
   $pam_ldapd_session     = false,
 
+  $pam_sss               = false,
+  $pam_sss_account       = false,
+  $pam_sss_auth          = false,
+  $pam_sss_password      = false,
+  $pam_sss_session       = false,
+
   $pam_tally             = false,
   $pam_tally_account     = false,
   $pam_tally_auth        = false,
@@ -273,6 +307,40 @@ class pam::pamd (
     case $pam_ldapd_session {
       false:   { $pam_ldapd_session_set = $pam::params::pam_ldapd_session }
       default: { $pam_ldapd_session_set = $pam_ldapd_session }
+    }
+
+  }
+
+  if($pam_sss) {
+
+    package { 'sssd':
+      ensure => present,
+    }
+
+    service { 'sssd':
+      ensure => running,
+      enabled => true,
+      require => Package['sssd'],
+    }
+
+    case $pam_sss_account {
+      false:   { $pam_sss_account_set = $pam::params::pam_sss_account }
+      default: { $pam_sss_account_set = $pam_sss_account }
+    }
+
+    case $pam_sss_auth {
+      false:   { $pam_sss_auth_set = $pam::params::pam_sss_auth }
+      default: { $pam_sss_auth_set = $pam_sss_auth }
+    }
+
+    case $pam_sss_password {
+      false:   { $pam_sss_password_set = $pam::params::pam_sss_password }
+      default: { $pam_sss_password_set = $pam_sss_password }
+    }
+
+    case $pam_sss_session {
+      false:   { $pam_sss_session_set = $pam::params::pam_sss_session }
+      default: { $pam_sss_session_set = $pam_sss_session }
     }
 
   }

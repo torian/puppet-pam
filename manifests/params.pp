@@ -70,6 +70,11 @@ class pam::params {
       $pam_ldapd_password    = false
       $pam_ldapd_session     = false
 
+      $pam_sss_account       = '[default=bad success=ok user_unknown=ignore] pam_sss.so'
+      $pam_sss_auth          = 'sufficient    pam_sss.so use_first_pass'
+      $pam_sss_password      = 'sufficient    pam_sss.so use_authtok'
+      $pam_sss_session       = 'optional      pam_sss.so'
+
       $ldap_conf             = '/etc/openldap/ldap.conf'
 
       $pam_tally_account     = 'required      pam_tally.so'
