@@ -384,6 +384,12 @@ class pam::pamd (
 
   if($pam_mkhomedir) {
 
+    if($pam::params::pam_mkhomedir_package) {
+      package { $pam::params::pam_mkhomedir_package:
+        ensure => present
+      }
+    }
+
     case $pam_mkhomedir_session {
       false:   { $pam_mkhomedir_session_set = $pam::params::pam_mkhomedir_session }
       default: { $pam_mkhomedir_session_set = $pam_mkhomedir_session }

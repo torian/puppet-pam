@@ -44,10 +44,13 @@ class pam::params {
       case $::operatingsystemmajrelease {
         5 : {
           $package_pam_ldap = 'nss_ldap'
+          $pam_mkhomedir_so = 'pam_mkhomdir.so'
         }
 
         6 : {
           $package_pam_ldap = 'nss-pam-ldapd'
+          $pam_mkhomedir_so = 'pam_oddjob_mkhomdir.so'
+          $pam_mkhomedir_package = 'oddjob-mkhomedir'
         }
       
         default : {
@@ -85,7 +88,7 @@ class pam::params {
 
       $pam_cracklib_password = 'requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1'
 
-      $pam_mkhomedir_session = 'requisite     pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+      $pam_mkhomedir_session = "requisite     ${pam_mkhomedir_so} skel=/etc/skel/ umask=0022"
 
     }
 
