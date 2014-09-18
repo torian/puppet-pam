@@ -17,7 +17,7 @@ class pam::pamd::redhat {
 
   file { "${pam::params::prefix_pamd}/system-auth":
     ensure => link,
-    target => "${pam::params::prefix_pamd}/system-auth-ac",
+    target => 'system-auth-ac',
   }
 
   if($pam::pamd::pam_ldap) {
