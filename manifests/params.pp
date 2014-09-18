@@ -55,6 +55,11 @@ class pam::params {
         }
       }
 
+      $pam_unix_account      = 'required      pam_unix.so broken_shadow'
+      $pam_unix_auth         = 'sufficient    pam_unix.so nullok try_first_pass'
+      $pam_unix_password     = 'sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+      $pam_unix_session      = 'required      pam_unix.so'
+
       $pam_ldap_account      = '[default=bad success=ok user_unknown=ignore] pam_ldap.so'
       $pam_ldap_auth         = 'sufficient    pam_ldap.so use_first_pass'
       $pam_ldap_password     = 'sufficient    pam_ldap.so use_authtok'

@@ -6,6 +6,30 @@
 #
 # === Parameters
 #
+#  [pam_unix_account]
+#  When specified, it allows for customization
+#  of pam_unix.so in account type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'required      pam_unix.so broken_shadow'
+#
+#  [pam_unix_auth]
+#  When specified, it allows for customization
+#  of pam_unix.so in auth type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'sufficient    pam_unix.so nullok try_first_pass'
+#
+#  [pam_unix_password]
+#  When specified, it allows for customization
+#  of pam_unix.so in password type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+#
+#  [pam_unix_session]
+#  When specified, it allows for customization
+#  of pam_unix.so in session type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'required      pam_unix.so'
+#
 #  [pam_ldap]
 #  If enabled sets up the usage of pam_ldap.so
 #  *Conflicts* pam_ldapd
@@ -138,6 +162,11 @@
 #
 #
 class pam::pamd (
+  $pam_unix_account      = false,
+  $pam_unix_auth         = false,
+  $pam_unix_password     = false,
+  $pam_unix_session      = false,
+
   $pam_ldap              = false,
   $pam_ldap_account      = false,
   $pam_ldap_auth         = false,
@@ -170,6 +199,26 @@ class pam::pamd (
 
   if($enable_motd) {
     motd::register { 'pam::pamd': }
+  }
+
+  case $pam_unix_account {
+    false:   { $pam_unix_account_set = $pam::params::pam_unix_account }
+    default: { $pam_unix_account_set = $pam_unix_account }
+  }
+
+  case $pam_unix_auth {
+    false:   { $pam_unix_auth_set = $pam::params::pam_unix_auth }
+    default: { $pam_unix_auth_set = $pam_unix_auth }
+  }
+
+  case $pam_unix_password {
+    false:   { $pam_unix_password_set = $pam::params::pam_unix_password }
+    default: { $pam_unix_password_set = $pam_unix_password }
+  }
+
+  case $pam_unix_session {
+    false:   { $pam_unix_session_set = $pam::params::pam_unix_session }
+    default: { $pam_unix_session_set = $pam_unix_session }
   }
 
   if($pam_ldap) {
