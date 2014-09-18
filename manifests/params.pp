@@ -44,12 +44,12 @@ class pam::params {
       case $::operatingsystemmajrelease {
         5 : {
           $package_pam_ldap = 'nss_ldap'
-          $pam_mkhomedir_so = 'pam_mkhomdir.so'
+          $pam_mkhomedir_so = 'pam_mkhomedir.so'
         }
 
         6 : {
           $package_pam_ldap = 'nss-pam-ldapd'
-          $pam_mkhomedir_so = 'pam_oddjob_mkhomdir.so'
+          $pam_mkhomedir_so = 'pam_oddjob_mkhomedir.so'
           $pam_mkhomedir_package = 'oddjob-mkhomedir'
         }
       
