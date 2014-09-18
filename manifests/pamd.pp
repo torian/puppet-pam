@@ -318,8 +318,8 @@ class pam::pamd (
     }
 
     service { 'sssd':
-      ensure => running,
-      enabled => true,
+      ensure  => running,
+      enable  => true,
       require => Package['sssd'],
     }
 
