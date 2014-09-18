@@ -88,7 +88,7 @@ class pam::params {
 
       $pam_cracklib_password = 'requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1'
 
-      $pam_mkhomedir_session = "requisite     ${pam_mkhomedir_so} skel=/etc/skel/ umask=0022"
+      $pam_mkhomedir_session = "optional      ${pam_mkhomedir_so} skel=/etc/skel umask=0022"
 
     }
 
@@ -119,7 +119,7 @@ class pam::params {
 
       $pam_cracklib_password = 'requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1'
 
-      $pam_mkhomedir_session = 'requisite     pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+      $pam_mkhomedir_session = 'optional      pam_mkhomedir.so skel=/etc/skel umask=0022'
 
     }
 
