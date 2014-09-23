@@ -212,6 +212,7 @@ class pam::pamd (
   $pam_sss_auth          = false,
   $pam_sss_password      = false,
   $pam_sss_session       = false,
+  $sssd_conf             = false,
 
   $pam_tally             = false,
   $pam_tally_account     = false,
@@ -317,10 +318,16 @@ class pam::pamd (
       ensure => present,
     }
 
+    file { '/etc/sssd/sssd.conf':
+      ensure => file,
+      source => $sssd_conf,
+      require => Package['sssd'],
+    }
+
     service { 'sssd':
       ensure  => running,
       enable  => true,
-      require => Package['sssd'],
+      require => File['/etc/sssd/sssd.conf'],
     }
 
     case $pam_sss_account {
