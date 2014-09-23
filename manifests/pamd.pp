@@ -6,6 +6,30 @@
 #
 # === Parameters
 #
+#  [pam_unix_account]
+#  When specified, it allows for customization
+#  of pam_unix.so in account type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'required      pam_unix.so broken_shadow'
+#
+#  [pam_unix_auth]
+#  When specified, it allows for customization
+#  of pam_unix.so in auth type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'sufficient    pam_unix.so nullok try_first_pass'
+#
+#  [pam_unix_password]
+#  When specified, it allows for customization
+#  of pam_unix.so in password type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+#
+#  [pam_unix_session]
+#  When specified, it allows for customization
+#  of pam_unix.so in session type
+#  *Requires* pam_unix => true
+#  *Optional* defaults to 'required      pam_unix.so'
+#
 #  [pam_ldap]
 #  If enabled sets up the usage of pam_ldap.so
 #  *Conflicts* pam_ldapd
@@ -56,6 +80,34 @@
 #  [pam_ldapd_session]
 #  UNTESTED
 #  *Optional* defaults to false
+#
+#  [pam_sss]
+#  If enabled sets up the usage of pam_sss.so
+#  *Optional* defaults to false
+#
+#  [pam_sss_account]
+#  When specified it allows for customization
+#  of pam_sss.so in account type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to '[default=bad success=ok user_unknown=ignore] pam_sss.so'
+#
+#  [pam_sss_auth]
+#  When specified it allows for customization
+#  of pam_sss.so in auth type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to 'sufficient    pam_sss.so use_first_pass'
+#
+#  [pam_sss_password]
+#  When specified it allows for customization
+#  of pam_sss.so in password type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to 'sufficient    pam_sss.so use_authtok'
+#
+#  [pam_sss_session]
+#  When specified it allows for customization
+#  of pam_sss.so in session type
+#  *Requires* pam_sss => true
+#  *Optional* defaults to 'optional      pam_sss.so'
 #
 #  [pam_tally]
 #  UNTESTED
@@ -138,6 +190,11 @@
 #
 #
 class pam::pamd (
+  $pam_unix_account      = false,
+  $pam_unix_auth         = false,
+  $pam_unix_password     = false,
+  $pam_unix_session      = false,
+
   $pam_ldap              = false,
   $pam_ldap_account      = false,
   $pam_ldap_auth         = false,
@@ -149,6 +206,13 @@ class pam::pamd (
   $pam_ldapd_auth        = false,
   $pam_ldapd_password    = false,
   $pam_ldapd_session     = false,
+
+  $pam_sss               = false,
+  $pam_sss_account       = false,
+  $pam_sss_auth          = false,
+  $pam_sss_password      = false,
+  $pam_sss_session       = false,
+  $sssd_conf             = false,
 
   $pam_tally             = false,
   $pam_tally_account     = false,
@@ -170,6 +234,26 @@ class pam::pamd (
 
   if($enable_motd) {
     motd::register { 'pam::pamd': }
+  }
+
+  case $pam_unix_account {
+    false:   { $pam_unix_account_set = $pam::params::pam_unix_account }
+    default: { $pam_unix_account_set = $pam_unix_account }
+  }
+
+  case $pam_unix_auth {
+    false:   { $pam_unix_auth_set = $pam::params::pam_unix_auth }
+    default: { $pam_unix_auth_set = $pam_unix_auth }
+  }
+
+  case $pam_unix_password {
+    false:   { $pam_unix_password_set = $pam::params::pam_unix_password }
+    default: { $pam_unix_password_set = $pam_unix_password }
+  }
+
+  case $pam_unix_session {
+    false:   { $pam_unix_session_set = $pam::params::pam_unix_session }
+    default: { $pam_unix_session_set = $pam_unix_session }
   }
 
   if($pam_ldap) {
@@ -228,6 +312,46 @@ class pam::pamd (
 
   }
 
+  if($pam_sss) {
+
+    package { 'sssd':
+      ensure => present,
+    }
+
+    file { '/etc/sssd/sssd.conf':
+      ensure => file,
+      source => $sssd_conf,
+      require => Package['sssd'],
+    }
+
+    service { 'sssd':
+      ensure  => running,
+      enable  => true,
+      require => File['/etc/sssd/sssd.conf'],
+    }
+
+    case $pam_sss_account {
+      false:   { $pam_sss_account_set = $pam::params::pam_sss_account }
+      default: { $pam_sss_account_set = $pam_sss_account }
+    }
+
+    case $pam_sss_auth {
+      false:   { $pam_sss_auth_set = $pam::params::pam_sss_auth }
+      default: { $pam_sss_auth_set = $pam_sss_auth }
+    }
+
+    case $pam_sss_password {
+      false:   { $pam_sss_password_set = $pam::params::pam_sss_password }
+      default: { $pam_sss_password_set = $pam_sss_password }
+    }
+
+    case $pam_sss_session {
+      false:   { $pam_sss_session_set = $pam::params::pam_sss_session }
+      default: { $pam_sss_session_set = $pam_sss_session }
+    }
+
+  }
+
   if($pam_tally) {
 
     case $pam_tally_account {
@@ -266,6 +390,12 @@ class pam::pamd (
   }
 
   if($pam_mkhomedir) {
+
+    if($pam::params::pam_mkhomedir_package) {
+      package { $pam::params::pam_mkhomedir_package:
+        ensure => present
+      }
+    }
 
     case $pam_mkhomedir_session {
       false:   { $pam_mkhomedir_session_set = $pam::params::pam_mkhomedir_session }

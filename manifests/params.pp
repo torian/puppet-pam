@@ -31,7 +31,7 @@ class pam::params {
 
       $pam_cracklib_password = 'requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1'
 
-      $pam_mkhomedir_session = 'requisite     pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+      $pam_mkhomedir_session = 'optional      pam_mkhomedir.so skel=/etc/skel umask=0022'
 
     }
 
@@ -44,16 +44,24 @@ class pam::params {
       case $::operatingsystemmajrelease {
         5 : {
           $package_pam_ldap = 'nss_ldap'
+          $pam_mkhomedir_so = 'pam_mkhomedir.so'
         }
 
         6 : {
           $package_pam_ldap = 'nss-pam-ldapd'
+          $pam_mkhomedir_so = 'pam_oddjob_mkhomedir.so'
+          $pam_mkhomedir_package = 'oddjob-mkhomedir'
         }
       
         default : {
           notice("${::operatingsystem} version ${::operatingsystemmajrelease} not handled")
         }
       }
+
+      $pam_unix_account      = 'required      pam_unix.so broken_shadow'
+      $pam_unix_auth         = 'sufficient    pam_unix.so nullok try_first_pass'
+      $pam_unix_password     = 'sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+      $pam_unix_session      = 'required      pam_unix.so'
 
       $pam_ldap_account      = '[default=bad success=ok user_unknown=ignore] pam_ldap.so'
       $pam_ldap_auth         = 'sufficient    pam_ldap.so use_first_pass'
@@ -65,6 +73,11 @@ class pam::params {
       $pam_ldapd_password    = false
       $pam_ldapd_session     = false
 
+      $pam_sss_account       = '[default=bad success=ok user_unknown=ignore] pam_sss.so'
+      $pam_sss_auth          = 'sufficient    pam_sss.so use_first_pass'
+      $pam_sss_password      = 'sufficient    pam_sss.so use_authtok'
+      $pam_sss_session       = 'optional      pam_sss.so'
+
       $ldap_conf             = '/etc/openldap/ldap.conf'
 
       $pam_tally_account     = 'required      pam_tally.so'
@@ -75,7 +88,7 @@ class pam::params {
 
       $pam_cracklib_password = 'requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1'
 
-      $pam_mkhomedir_session = 'requisite     pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+      $pam_mkhomedir_session = "optional      ${pam_mkhomedir_so} skel=/etc/skel umask=0022"
 
     }
 
@@ -106,7 +119,7 @@ class pam::params {
 
       $pam_cracklib_password = 'requisite     pam_cracklib.so try_first_pass retry=3 minlen=9 dcredit=-1'
 
-      $pam_mkhomedir_session = 'requisite     pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+      $pam_mkhomedir_session = 'optional      pam_mkhomedir.so skel=/etc/skel umask=0022'
 
     }
 
