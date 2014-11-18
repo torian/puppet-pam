@@ -49,7 +49,6 @@ class pam::params {
         6 : {
           $package_pam_ldap = 'nss-pam-ldapd'
         }
-      
         default : {
           notice("${::operatingsystem} version ${::operatingsystemmajrelease} not handled")
         }

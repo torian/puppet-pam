@@ -1,0 +1,26 @@
+###############################################################################
+# << FILE MANAGED BY PUPPET >>
+# Manual changes are likey to be overwritten
+###############################################################################
+auth        required      pam_env.so
+auth        [success=done ignore=ignore default=die] pam_pkcs11.so wait_for_card card_only
+auth        required      pam_deny.so
+
+account     required      pam_unix.so broken_shadow
+account     sufficient    pam_localuser.so
+account     sufficient    pam_succeed_if.so uid < 500 quiet
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+account <%= scope.lookupvar('pam::pamd::pam_ldap_account_set') %>
+<% end -%>
+account     required      pam_permit.so
+
+password    required      pam_pkcs11.so
+
+session     optional      pam_keyinit.so revoke
+session     required      pam_limits.so
+session     optional      pam_mkhomedir.so skel=/etc/skel umask=0077
+session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
+session     required      pam_unix.so
+<% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
+session <%= scope.lookupvar('pam::pamd::pam_ldap_session_set') %>
+<% end -%>
