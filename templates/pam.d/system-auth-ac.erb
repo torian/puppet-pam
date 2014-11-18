@@ -18,15 +18,16 @@ auth  <%= scope.lookupvar('pam::pamd::pam_ldap_auth_set') %>
 auth        required      pam_deny.so
 
 <% if scope.lookupvar('pam::pamd::pam_tally') == true then -%>
-account	<%= scope.lookupvar('pam::pamd::pam_tally_account_set') %>
+account <%= scope.lookupvar('pam::pamd::pam_tally_account_set') %>
 <% end -%>
 <% if scope.lookupvar('pam::pamd::pam_tally2') == true then -%>
-account	<%= scope.lookupvar('pam::pamd::pam_tally2_account_set') %>
+account <%= scope.lookupvar('pam::pamd::pam_tally2_account_set') %>
 <% end -%>
 account     required      pam_unix.so broken_shadow
+account     sufficient    pam_localuser.so
 account     sufficient    pam_succeed_if.so uid < 500 quiet
 <% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
-account	<%= scope.lookupvar('pam::pamd::pam_ldap_account_set') %>
+account <%= scope.lookupvar('pam::pamd::pam_ldap_account_set') %>
 <% end -%>
 account     required      pam_permit.so
 
@@ -39,11 +40,11 @@ password    required      pam_deny.so
 
 session     optional      pam_keyinit.so revoke
 session     required      pam_limits.so
+<% if scope.lookupvar('pam::pamd::pam_mkhomedir') == true then -%>
+session <%= scope.lookupvar('pam::pamd::pam_mkhomedir_session') %>
+<% end -%>
 session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
 session     required      pam_unix.so
 <% if scope.lookupvar('pam::pamd::pam_ldap') == true then -%>
-session	<%= scope.lookupvar('pam::pamd::pam_ldap_session_set') %>
-<% end -%>
-<% if scope.lookupvar('pam::pamd::pam_mkhomedir') == true then -%>
-session <%= scope.lookupvar('pam::pamd::pam_mkhomedir_session_set') %>
+session <%= scope.lookupvar('pam::pamd::pam_ldap_session_set') %>
 <% end -%>
