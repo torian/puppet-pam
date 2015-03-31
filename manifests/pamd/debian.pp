@@ -8,7 +8,7 @@ class pam::pamd::debian {
     ensure => present,
     owner  => 'root',
     group  => 'root',
-    mode   => '0644'
+    mode   => '0644',
   }
 
   file { "${pam::params::prefix_pamd}/common-account":
@@ -33,12 +33,9 @@ class pam::pamd::debian {
 
   if($pam::pamd::pam_ldap) {
 
-    #Class['ldap'] -> Class['pam::pamd::debian']
-
     file { '/etc/pam_ldap.conf':
       ensure  => link,
       target  => $pam::params::ldap_conf,
-      require => [ Class['ldap'], File[$pam::params::ldap_conf] ],
     }
 
   }
