@@ -4,7 +4,7 @@ class pam::params {
 
   case $::osfamily {
 
-    'Debian' : {
+    /(Debian|Ubuntu)/ : {
       $packages    = [ 'libpam-ldap' ]
       $prefix_pamd = '/etc/pam.d'
       $owner       = 'root'
